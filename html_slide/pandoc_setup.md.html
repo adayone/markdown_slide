@@ -124,6 +124,41 @@ pandoc slides.md -o slides.html -t revealjs
 <li>simple：白色背景，黑色文字</li>
 <li>solarized：奶油色背景，深青色文字</li>
 </ul>
+</section><section id="makefile" class="slide level2">
+<h1>Makefile</h1>
+<p>利用makefile来自动化构建</p>
+<pre class="shell"><code>slide:${f}
+    pandoc ${f} -o pdf_slide/${f}.pdf -t beamer --latex-engine=xelatex --template=./mytemplate.tex
+
+pdf:${f}
+    pandoc ${f} -o pdf_doc/${f}.pdf  --latex-engine=xelatex --template=./mytemplate.tex
+
+reveal:${f}
+    pandoc ${f} -o html_slide/${f}.html -t revealjs -s -V theme=beige
+
+all:${f} slide pdf reveal
+    echo &quot;ok&quot;
+
+print:${f}
+    echo ${f}</code></pre>
+</section><section id="make-usage" class="slide level2">
+<h1>make usage</h1>
+<pre class="shell"><code>make slide f=pandoc_setup.md 
+make pdf f=pandoc_setup.md 
+make reveal f=pandoc_setup.md </code></pre>
+</section><section id="文件结构" class="slide level2">
+<h1>文件结构</h1>
+<pre class="shell"><code>.
+├── Makefile
+├── html_slide
+│   ├── pandoc_setup.md.html
+│   └── reveal.js
+├── mytemplate.tex
+├── pandoc_setup.md
+├── pdf_doc
+│   └── pandoc_setup.md.pdf
+└── pdf_slide
+    └── pandoc_setup.md.pdf</code></pre>
 </section><section id="thanks" class="slide level2">
 <h1>thanks</h1>
 </section></section>

@@ -7,5 +7,9 @@ pdf:${f}
 reveal:${f}
 	pandoc ${f} -o html_slide/${f}.html -t revealjs -s -V theme=beige
 
+all:${f} slide pdf reveal
+	echo "ok"
+
+
 print:${f}
 	echo ${f}

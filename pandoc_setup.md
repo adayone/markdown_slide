@@ -88,4 +88,46 @@ pandoc slides.md -o slides.html -t revealjs
 - simple：白色背景，黑色文字
 - solarized：奶油色背景，深青色文字
 
+## Makefile
+利用makefile来自动化构建
+```shell
+slide:${f}
+    pandoc ${f} -o pdf_slide/${f}.pdf -t beamer --latex-engine=xelatex --template=./mytemplate.tex
+
+pdf:${f}
+    pandoc ${f} -o pdf_doc/${f}.pdf  --latex-engine=xelatex --template=./mytemplate.tex
+
+reveal:${f}
+    pandoc ${f} -o html_slide/${f}.html -t revealjs -s -V theme=beige
+
+all:${f} slide pdf reveal
+    echo "ok"
+
+print:${f}
+    echo ${f}
+```
+
+## make usage
+```shell
+make slide f=pandoc_setup.md 
+make pdf f=pandoc_setup.md 
+make reveal f=pandoc_setup.md 
+```
+
+
+## 文件结构
+```shell
+.
+├── Makefile
+├── html_slide
+│   ├── pandoc_setup.md.html
+│   └── reveal.js
+├── mytemplate.tex
+├── pandoc_setup.md
+├── pdf_doc
+│   └── pandoc_setup.md.pdf
+└── pdf_slide
+    └── pandoc_setup.md.pdf
+```
+
 ## thanks
