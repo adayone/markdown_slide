@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="胡浩源 haoyuan.huhy@gmail.com" />
+  <title>MAC下利用pandoc+markdown来写slide</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="reveal.js/css/reveal.min.css"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+    <link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme">
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+    <!--[if lt IE 9]>
+    <script src="reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">MAC下利用pandoc+markdown来写slide</h1>
+    <h2 class="author">胡浩源 haoyuan.huhy@gmail.com</h2>
+    <h3 class="date">2015年1月16</h3>
+</section>
+
+<section><section id="mac下用markdownmarkdown写slide" class="titleslide slide level1"><h1>Mac下用markdown+markdown写slide</h1></section><section id="why" class="slide level2">
+<h1>WHY</h1>
+<p>写一份markdown文件， 根据需要可以生成:</p>
+<ul>
+<li>slide pdf</li>
+<li>document pdf</li>
+<li>slide html</li>
+</ul>
+</section><section id="安装" class="slide level2">
+<h1>安装</h1>
+<pre class="shell"><code>brew install pandoc</code></pre>
+</section><section id="源码" class="slide level2">
+<h1>源码</h1>
+<pre class="sourceCode markdown"><code class="sourceCode markdown"><span class="fu"># today</span>
+
+<span class="fu">## morning</span>
+- <span class="fl">I want to have breakfast</span>
+
+<span class="fl">## afternoon</span>
+<span class="fl">- I want to have lunch</span></code></pre>
+</section><section id="pdf" class="slide level2">
+<h1>PDF</h1>
+<pre class="shell"><code>pandoc -D latex &gt; mytemplate.tex</code></pre>
+<pre class="shell"><code>pandoc test.md -o test.pdf -t beamer 
+--latex-engine=xelatex 
+--template=mytemplate.tex</code></pre>
+<p>直接执行是不成功的。</p>
+</section><section id="增加中文字体配置" class="slide level2">
+<h1>增加中文字体配置</h1>
+<p>修改mytemplate.tex</p>
+<pre class="tex"><code>\ifxetex
+\usepackage{hyperref}
+\usepackage{fontspec,xltxtra,xunicode}
+\defaultfontfeatures{Mapping=tex-text}
+\usepackage{xeCJK}
+\setCJKmainfont[BoldFont = Hiragino Sans GB W6]{Hiragino Sans GB W3}
+\setCJKsansfont[BoldFont=SimHei]{SimHei}
+\setCJKmonofont{SimHei}
+\else
+\usepackage[unicode=true]{hyperref}
+\fi</code></pre>
+</section><section id="html5" class="slide level2">
+<h1>html5</h1>
+<ul>
+<li>DZSlides</li>
+<li>Slidy</li>
+<li>S5</li>
+<li>Slideous</li>
+<li>reveal.js</li>
+</ul>
+</section><section id="reveal.js" class="slide level2">
+<h1>reveal.js</h1>
+<pre class="shell"><code>git clone https://github.com/hakimel/reveal.js
+
+pandoc slides.md -o slides.html -t revealjs 
+-s -V theme=beige</code></pre>
+<p>这样是执行不成功的</p>
+<h3 id="fix">fix</h3>
+<p>不要用reveal 3.0， 用reveal.js 2.6</p>
+</section><section id="reveal.js背景" class="slide level2">
+<h1>reveal.js背景</h1>
+<ul>
+<li>default：（默认）深灰色背景，白色文字</li>
+<li>beige：米色背景，深色文字</li>
+<li>sky：天蓝色背景，白色细文字</li>
+<li>night：黑色背景，白色粗文字</li>
+<li>serif：浅色背景，灰色衬线文字</li>
+<li>simple：白色背景，黑色文字</li>
+<li>solarized：奶油色背景，深青色文字</li>
+</ul>
+</section><section id="thanks" class="slide level2">
+<h1>thanks</h1>
+</section></section>
+    </div>
+  </div>
+
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.min.js"></script>
+
+  <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        theme: 'beige', // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+//          { src: 'reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; }, }
+//          { src: 'reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+]});
+    </script>
+    </body>
+</html>

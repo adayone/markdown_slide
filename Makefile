@@ -1,8 +1,11 @@
-slide:
-	pandoc pandoc_setup.md -o pandoc_setup_slide.pdf -t beamer --latex-engine=xelatex --template=./mytemplate.tex
+slide:${f}
+	pandoc ${f} -o pdf_slide/${f}.pdf -t beamer --latex-engine=xelatex --template=./mytemplate.tex
 
-pdf:
-	pandoc pandoc_setup.md -o pandoc_setup.pdf  --latex-engine=xelatex --template=./mytemplate.tex
+pdf:${f}
+	pandoc ${f} -o pdf_doc/${f}.pdf  --latex-engine=xelatex --template=./mytemplate.tex
 
-test:
-	pandoc test.md -o test.pdf -t beamer --latex-engine=xelatex --template=../mytemplate.tex
+reveal:${f}
+	pandoc ${f} -o html_slide/${f}.html -t revealjs -s -V theme=beige
+
+print:${f}
+	echo ${f}
