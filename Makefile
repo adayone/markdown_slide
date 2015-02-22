@@ -1,6 +1,7 @@
 slide:${f}
 	pandoc ${f} -o pdf_slide/${f}.pdf -t beamer --latex-engine=xelatex --template=./mytemplate.tex
 
+
 pdf:${f}
 	pandoc ${f} -o pdf_doc/${f}.pdf  --latex-engine=xelatex --template=./mytemplate.tex
 

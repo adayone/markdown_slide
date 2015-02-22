@@ -131,3 +131,5 @@ make reveal f=pandoc_setup.md
 ```
 
 ## thanks
+
+[gitlab地址](https://github.com/haoyuan-hu/markdown_slide.git)
